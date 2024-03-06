@@ -9,7 +9,7 @@ import requests
 def top_ten(subreddit):
     """Print the titles of the 10 hottest posts on a given subreddit."""
     # Construct the URL for the subreddit's hot posts in JSON format
-    url = f"https://www.reddit.com/r/{subreddit}/hot/.json"
+    url = "https://www.reddit.com/r/{}/hot/.json".format(subreddit)
 
     # Define headers for the HTTP request, including User-Agent
     headers = {
