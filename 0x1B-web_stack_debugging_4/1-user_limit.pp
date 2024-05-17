@@ -1,17 +1,20 @@
-user { 'holberton':
-  ensure     => present,
-  shell      => '/bin/bash',
-  home       => '/home/holberton',
-  managehome => true,
+# This exec resource ensures the soft nofile limit for the holberton user is set to 50000.
+exec { 'change-os-configuration-for-holberton-user-soft':
+  # The command uses sed to append 'holberton soft nofile 50000' to /etc/security/limits.conf
+  # if a line starting with 'holberton soft' is found.
+  command => "sed -i '/^holberton soft/a holberton soft nofile 50000' /etc/security/limits.conf",
+  
+  # The path to search for the sed command, ensuring it can be found and executed.
+  path    => '/usr/local/bin/:/bin/',
 }
 
-file { '/home/holberton':
-  ensure => directory,
+# This exec resource ensures the hard nofile limit for the holberton user is set to 50000.
+exec { 'change-os-configuration-for-holberton-user-hard':
+  # The command uses sed to append 'holberton hard nofile 50000' to /etc/security/limits.conf
+  # if a line starting with 'holberton hard' is found.
+  command => "sed -i '/^holberton hard/a holberton hard nofile 50000' /etc/security/limits.conf",
+  
+  # The path to search for the sed command, ensuring it can be found and executed.
+  path    => '/usr/local/bin/:/bin/',
 }
 
-file { '/home/holberton/.bashrc':
-  ensure  => file,
-  mode    => '0644',
-  owner   => 'holberton',
-  content => "ulimit -n 1024\n",
-}
